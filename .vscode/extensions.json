@@ -3,6 +3,9 @@
     "nrwl.angular-console",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "editorconfig.editorconfig",
+    "bradlc.vscode-tailwindcss",
     "ms-playwright.playwright",
     "firsttris.vscode-jest-runner"
   ]
