@@ -1,0 +1,26 @@
+{
+  "name": "nxa-lab-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/nxa-lab-ui/src",
+  "prefix": "nxa",
+  "projectType": "library",
+  "tags": ["scope:shared"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/nxa-lab-ui"],
+      "options": {
+        "jestConfig": "libs/nxa-lab-ui/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "stylelint 'libs/nxa-lab-ui/src/**/*.scss' --config .stylelintrc.json"
+      }
+    }
+  }
+}

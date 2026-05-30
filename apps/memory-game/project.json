@@ -1,0 +1,115 @@
+{
+  "name": "memory-game",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/memory-game/src",
+  "tags": ["scope:app"],
+  "i18n": {
+    "sourceLocale": "en",
+    "locales": {
+      "el": {
+        "translation": "apps/memory-game/src/locale/messages.el.arb",
+        "baseHref": "/el/"
+      }
+    }
+  },
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/memory-game",
+        "browser": "apps/memory-game/src/main.ts",
+        "tsConfig": "apps/memory-game/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/memory-game/public"
+          }
+        ],
+        "styles": ["apps/memory-game/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/nxa-lab-ui/src"]
+        },
+        "polyfills": ["@angular/localize/init"],
+        "i18nMissingTranslation": "error"
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "localize": true
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "localize": ["en"]
+        },
+        "el": {
+          "localize": ["el"]
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "memory-game:build",
+        "outFile": "apps/memory-game/src/locale/messages.en.arb",
+        "format": "arb"
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "memory-game:build:production"
+        },
+        "development": {
+          "buildTarget": "memory-game:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/memory-game"],
+      "options": {
+        "jestConfig": "apps/memory-game/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "stylelint 'apps/memory-game/src/**/*.scss' --config .stylelintrc.json"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "memory-game:build",
+        "staticFilePath": "dist/apps/memory-game/browser",
+        "spa": true
+      }
+    }
+  }
+}
